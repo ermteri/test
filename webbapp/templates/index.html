@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Spelling Checker</title>
+    </head>
+    <body>
+        <h1>Spelling Checker</h1>
+        <form method="post">
+            <div>
+                <label for="language">Language:</label>
+                <select name="language" id="language">
+                    <option value="en" {% if language == 'en' %}selected{% endif %}>English</option>
+                    <option value="sv" {% if language == 'sv' %}selected{% endif %}>Swedish</option>
+                </select>
+            </div>
+            <br>
+            <textarea name="text" rows="10" cols="60" placeholder="Enter text here...">{{ text }}</textarea>
+            <br>
+            <button type="submit">Check Spelling</button>
+        </form>
+        {% if result %}
+            <h2>Misspelled Words</h2>
+            {% if result %}
+                <ul>
+                    {% for word, suggestions in result.items() %}
+                        <li><strong>{{ word }}</strong> → {{ suggestions | join(', ') }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No spelling mistakes found.</p>
+            {% endif %}
+        {% endif %}
+    </body>
+</html>
